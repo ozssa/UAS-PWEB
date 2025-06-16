@@ -1,12 +1,15 @@
 <?php
-// controllers/PaymentController.php
 require_once 'models/Payment.php';
+require_once 'config/database.php';
 
 class PaymentController {
     private $payment;
-    private $xendit_api_key = 'xnd_development_XL6dv5G4fAi6Et4nas1hU7f0VRdGArje5CTpNs5uZRK3IoDGUN6DAxT7ZhwFifz';
+    private $xendit_api_key;
+
     public function __construct($db) {
         $this->payment = new Payment($db);
+        $database = new Database();
+        $this->xendit_api_key = $database->xendit_api_key;
     }
 
     public function create() {
@@ -15,8 +18,12 @@ class PaymentController {
             exit;
         }
         if (isset($_GET['booking_id'])) {
-            $booking_id = $_GET['booking_id'];
-            // Simulasi data pemesanan
+            $booking_id = (int)$_GET['booking_id'];
+            // Validasi booking_id
+            if ($booking_id <= 0) {
+                echo 'ID pemesanan tidak valid.';
+                exit;
+            }
             $amount = 800000; // Contoh harga kamar Tipe B
             $external_id = 'kost_kurnia_' . time();
 
@@ -50,9 +57,12 @@ class PaymentController {
                 ];
                 $this->payment->create($data);
                 header('Location: ' . $result['invoice_url']);
+                exit;
             } else {
                 echo 'Gagal membuat invoice.';
             }
+        } else {
+            echo 'ID pemesanan tidak ditemukan.';
         }
     }
 

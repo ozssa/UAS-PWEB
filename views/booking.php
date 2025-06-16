@@ -24,7 +24,9 @@ if (!isset($room)) {
                 </a>
                 <h3 class="mb-1">Pemesanan Kamar <?php echo htmlspecialchars($room['tipe']); ?></h3>
             </div>
-            <form method="POST" action="index.php?controller=booking&action=create&room_id=<?php echo $room['id']; ?>" class="needs-validation" novalidate>
+            <form method="POST" action="index.php?controller=booking&action=create" class="needs-validation" novalidate>
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">
                 <div class="mb-3">
                     <label class="form-label">Tanggal Mulai</label>
                     <input type="date" class="form-control" name="tanggal_mulai" required>

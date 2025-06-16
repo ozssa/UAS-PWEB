@@ -21,8 +21,8 @@
                 <h3 class="mb-1">Buat Akun Baru</h3>
                 <p class="text-muted">Khusus Akun Pemilik Kos</p>
             </div>
-            
             <form class="needs-validation" novalidate method="POST" action="index.php?controller=auth&action=register">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <div class="input-group">
@@ -33,7 +33,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Nomor Telepon</label>
@@ -56,7 +55,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="mb-3">
                     <label class="form-label">Alamat Lengkap</label>
                     <div class="input-group">
@@ -67,7 +65,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label class="form-label">Username</label>
@@ -93,7 +90,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="form-check mb-4">
                     <input class="form-check-input" type="checkbox" id="terms" required>
                     <label class="form-check-label small" for="terms">
@@ -103,16 +99,13 @@
                         Harap setujui syarat dan ketentuan
                     </div>
                 </div>
-                
                 <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Daftar Akun</button>
-                
                 <div class="text-center mt-3">
                     <p class="mb-0">Sudah punya akun? <a href="index.php?controller=auth&action=login" class="text-primary fw-bold">Masuk sekarang</a></p>
                 </div>
             </form>
         </div>
     </div>
-    
     <footer class="text-center py-4">
         <p>© Copyright 2025 Kost Kurnia. All Rights Reserved</p>
     </footer>

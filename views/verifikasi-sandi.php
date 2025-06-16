@@ -1,5 +1,4 @@
 <?php
-// views/verifikasi-sandi.php
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -23,6 +22,7 @@
             </div>
             <p class="text-center">Kode verifikasi telah dikirim ke email Anda. Silakan periksa kotak masuk Anda.</p>
             <form class="needs-validation" novalidate method="POST" action="index.php?controller=auth&action=verify">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                 <div class="mb-3">
                     <label class="form-label">Kode Verifikasi</label>
                     <div class="input-group">

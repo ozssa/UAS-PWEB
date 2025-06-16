@@ -5,7 +5,10 @@ class Database {
     private $db_name = 'kost_kurnia';
     private $username = 'root';
     private $password = '';
-    public $conn;
+    private $conn;
+
+    // Konfigurasi API Key
+    public $xendit_api_key = 'xnd_development_lSfPAwXeuPlgJIw8GshKhl0GrzUCePIDDeDgqpO2L5AWZsp2pfV5RwXbrwcfE';
 
     public function connect() {
         $this->conn = null;
@@ -14,9 +17,8 @@ class Database {
             if ($this->conn->connect_error) {
                 throw new Exception('Koneksi gagal: ' . $this->conn->connect_error);
             }
-            $this->conn->set_charset('utf8mb4');
         } catch (Exception $e) {
-            die('Koneksi database gagal: ' . $e->getMessage());
+            echo 'Error: ' . $e->getMessage();
         }
         return $this->conn;
     }

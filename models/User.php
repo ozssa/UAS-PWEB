@@ -50,5 +50,29 @@ class User {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
+    public function uploadProfilePicture($user_id, $file) {
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        $max_size = 2 * 1024 * 1024; // 2MB
+        if (!in_array($file['type'], $allowed_types)) {
+            return 'Tipe file tidak diizinkan. Gunakan JPEG, PNG, atau GIF.';
+        }
+        if ($file['size'] > $max_size) {
+            return 'Ukuran file terlalu besar. Maksimum 2MB.';
+        }
+        $filename = 'profile_' . $user_id . '_' . time() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
+        $destination = 'uploads/profile/' . $filename;
+        if (move_uploaded_file($file['tmp_name'], $destination)) {
+            $query = "UPDATE {$this->table} SET profile_picture = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('si', $filename, $user_id);
+            return $stmt->execute() ? true : 'Gagal menyimpan gambar ke database.';
+        }
+        return 'Gagal mengunggah gambar.';
+    }
+
+    public function getDb() {
+        return $this->conn;
+    }
 }
 ?>

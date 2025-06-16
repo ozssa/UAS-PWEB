@@ -22,6 +22,7 @@
                 <p class="text-muted">Khusus Akun Pemilik Kos</p>
             </div>
             <form class="needs-validation" novalidate method="POST" action="index.php?controller=auth&action=login">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                 <div class="mb-3">
                     <label class="form-label">Nama Pengguna</label>
                     <div class="input-group">

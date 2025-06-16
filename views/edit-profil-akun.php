@@ -25,7 +25,18 @@ if (!isset($user)) {
                 <h3 class="mb-1">Edit Profil Akun</h3>
                 <p class="text-muted">Khusus Akun Pemilik Kos</p>
             </div>
-            <form class="needs-validation" novalidate method="POST" action="index.php?controller=auth&action=editProfile">
+            <form class="needs-validation" novalidate method="POST" action="index.php?controller=auth&action=editProfile" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                <div class="mb-3">
+                    <label class="form-label">Foto Profil</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" name="profile_picture" id="profile_picture" accept="image/*">
+                        <div class="invalid-feedback">Harap pilih file gambar.</div>
+                    </div>
+                    <?php if (!empty($user['profile_picture'])): ?>
+                        <img src="uploads/profile/<?php echo htmlspecialchars($user['profile_picture']); ?>" class="img-fluid mt-2" style="max-width: 100px;" alt="Profile Picture">
+                    <?php endif; ?>
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap</label>
                     <div class="input-group">
@@ -78,5 +89,27 @@ if (!isset($user)) {
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.js"></script>
+    <script>
+        document.getElementById('profile_picture').addEventListener('change', function(e) {
+            const formData = new FormData();
+            formData.append('profile_picture', e.target.files[0]);
+            formData.append('csrf_token', '<?php echo htmlspecialchars($csrf_token); ?>');
+            
+            fetch('index.php?controller=auth&action=editProfile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Foto profil berhasil diunggah!');
+                    location.reload();
+                } else {
+                    alert('Gagal mengunggah foto: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>

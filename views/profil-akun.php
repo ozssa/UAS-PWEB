@@ -24,6 +24,11 @@ if (!isset($user)) {
                 </a>
                 <h3 class="mb-1">Profil Akun</h3>
                 <p class="text-muted">Khusus Akun Pemilik Kos</p>
+                <?php if (!empty($user['profile_picture'])): ?>
+                    <img src="uploads/profile/<?php echo htmlspecialchars($user['profile_picture']); ?>" class="img-fluid rounded-circle mb-3" style="max-width: 100px;" alt="Profile Picture">
+                <?php else: ?>
+                    <i class="fas fa-user-circle fa-5x mb-3 text-muted"></i>
+                <?php endif; ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Nama Lengkap</label>
@@ -61,6 +66,7 @@ if (!isset($user)) {
                 </div>
             </div>
             <a href="index.php?controller=auth&action=editProfile" class="btn btn-primary w-100">Edit</a>
+            <a href="index.php?controller=auth&action=dashboard" class="btn btn-secondary w-100 mt-2">Dashboard</a>
         </div>
     </div>
     <footer class="text-center py-4">

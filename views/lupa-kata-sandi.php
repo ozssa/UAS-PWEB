@@ -1,5 +1,4 @@
 <?php
-// views/lupa-kata-sandi.php
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -22,6 +21,7 @@
                 <p class="text-muted">Khusus untuk Akun Pemilik Kos</p>
             </div>
             <form class="needs-validation" novalidate method="POST" action="index.php?controller=auth&action=forgotPassword">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                 <div class="mb-3">
                     <label class="form-label">Alamat E-mail</label>
                     <div class="input-group">

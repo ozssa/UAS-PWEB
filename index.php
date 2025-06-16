@@ -1,6 +1,10 @@
 <?php
-// index.php
-session_start();
+// Tambahkan header keamanan
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+
+require_once 'config/session.php'; // Mulai sesi
 require_once 'config/database.php';
 require_once 'controllers/AuthController.php';
 require_once 'controllers/RoomController.php';
@@ -10,44 +14,44 @@ require_once 'controllers/PaymentController.php';
 $database = new Database();
 $db = $database->connect();
 
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'home';
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'room';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
 switch ($controller) {
     case 'auth':
-        $authController = new AuthController($db);
-        if (method_exists($authController, $action)) {
-            $authController->$action();
+        $controller = new AuthController($db);
+        if (method_exists($controller, $action)) {
+            $controller->$action();
         } else {
-            header('Location: index.php');
+            echo 'Action tidak ditemukan.';
         }
         break;
     case 'room':
-        $roomController = new RoomController($db);
-        if (method_exists($roomController, $action)) {
-            $roomController->$action();
+        $controller = new RoomController($db);
+        if (method_exists($controller, $action)) {
+            $controller->$action();
         } else {
-            header('Location: index.php');
+            echo 'Action tidak ditemukan.';
         }
         break;
     case 'booking':
-        $bookingController = new BookingController($db);
-        if (method_exists($bookingController, $action)) {
-            $bookingController->$action();
+        $controller = new BookingController($db);
+        if (method_exists($controller, $action)) {
+            $controller->$action();
         } else {
-            header('Location: index.php');
+            echo 'Action tidak ditemukan.';
         }
         break;
     case 'payment':
-        $paymentController = new PaymentController($db);
-        if (method_exists($paymentController, $action)) {
-            $paymentController->$action();
+        $controller = new PaymentController($db);
+        if (method_exists($controller, $action)) {
+            $controller->$action();
         } else {
-            header('Location: index.php');
+            echo 'Action tidak ditemukan.';
         }
         break;
     default:
-        require_once 'views/index.php';
-        break;
+        $controller = new RoomController($db);
+        $controller->index();
 }
 ?>
