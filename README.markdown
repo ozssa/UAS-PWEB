@@ -101,13 +101,8 @@ chmod -R 755 uploads/
 - Manajemen booking
 
 ## Akun Demo
-**Pemilik Kos:**
-- Username: admin
-- Password: password123
-
-**Penghuni:**
-- Username: user1
-- Password: password123
+- Username: admin12
+- Password: admin123
 
 ## Teknologi Digunakan
 - PHP Native (MVC Pattern)
